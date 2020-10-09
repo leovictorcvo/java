@@ -1,0 +1,18 @@
+package com.leovictor.estruturadados.base;
+
+import java.lang.reflect.Array;
+
+public abstract class EstruturaEstatica<T> {
+	private T[] elementos;
+	private int tamanho;
+
+	public EstruturaEstatica(int capacidade) {
+		this.elementos = (T[]) new Object[capacidade];
+		this.tamanho = 0;
+	}
+
+	public EstruturaEstatica(int capacidade, Class<T> tipoClasse) {
+		this.elementos = (T[]) Array.newInstance(tipoClasse, capacidade);
+		this.tamanho = 0;
+	}
+}

@@ -1,0 +1,15 @@
+package com.leovictor.estruturadados.pilha;
+
+import com.leovictor.estruturadados.base.EstruturaEstatica;
+
+public class Pilha<T> extends EstruturaEstatica<T> {
+	public Pilha() {
+		super(10);
+	}
+	
+	public Pilha(int capacidade) {
+		super(capacidade);
+	}
+	
+	
+}

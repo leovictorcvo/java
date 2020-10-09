@@ -1,0 +1,111 @@
+package com.leovictor.estruturadados.vetor.teste;
+
+import java.util.Scanner;
+
+import com.leovictor.estruturadados.vetor.Vetor;
+
+public class TesteContato {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		int opcaoMenu = 0;
+
+		Vetor<Contato> contatos = new Vetor<Contato>(20);
+		criarContatosIniciais(20, contatos);
+
+		while (opcaoMenu != 12) {
+			opcaoMenu = mostraMenu(scan);
+			switch (opcaoMenu) {
+			case 1:
+				adicionarContatoNoFinal(scan, contatos);
+				break;
+			case 9:
+				contatos.removeTudo();
+				break;
+			case 10:
+				System.out.println("Contatos registrados: " + contatos.tamanho());
+				break;
+			case 11:
+				System.out.println(contatos.toString());
+				break;
+			case 12:
+				System.out.println();
+				System.out.println("************ Até mais ************");
+				break;
+
+			}
+		}
+		
+		scan.close();
+		scan = null;
+	}
+
+	private static void adicionarContatoNoFinal(Scanner scan, Vetor<Contato> contatos) {
+		Contato contato = obterInformacoesContato(scan);
+		contatos.adiciona(contato);
+		System.out.println("Contato adicionado com sucesso.");
+		System.out.println();
+	}
+	
+	private static void criarContatosIniciais(int quantidade, Vetor<Contato> contatos) {
+		Contato contato;
+		for (int i = 1; i <= quantidade; i++) {
+			contato = new Contato();
+			contato.setNome("Contato " + i);
+			contato.setNome("contato " + i + "@contato.com");
+
+			contatos.adiciona(contato);
+		}
+	}
+
+	private static String leDadosDoTeclado(String label, Scanner scan) {
+		System.out.println(label);
+		String entrada = scan.nextLine();
+		return entrada;
+	}
+	
+	private static int mostraMenu(Scanner scan) {
+		int opcao = 0;
+
+		while (!verificaSeOpcaoEValida(opcao)) {
+			System.out.println();
+			System.out.println("********* MENU *********");
+			System.out.println("1 - Adiciona contato no final do vetor");
+			System.out.println("2 - Adiciona contato em um posição específica");
+			System.out.println("3 - Consulta o contato em um posição específica");
+			System.out.println("4 - Pesquisa pelo contato");
+			System.out.println("5 - Obtem o índice da última ocorrência do contato");
+			System.out.println("6 - Verifica se o contato está registrado");
+			System.out.println("7 - Remove por posição no vetor");
+			System.out.println("8 - Remove o contato");
+			System.out.println("9 - Remover todos os contatos");
+			System.out.println("10 - Verifica o tamanho do vetor");
+			System.out.println("11 - Mostra os contatos cadastrados");
+			System.out.println("12 - Sair");
+
+			opcao = scan.nextInt();
+			if (!verificaSeOpcaoEValida(opcao)) {
+				System.out.println();
+				System.out.println("Opção inválida. Tente novamente");
+				System.out.println();
+			}
+		}
+
+		return opcao;
+	}
+
+	private static Contato obterInformacoesContato(Scanner scan) {
+		System.out.println();
+		System.out.println("Criando um contato, entre com as informações");
+		System.out.println();
+		String nome = leDadosDoTeclado("Informe o nome do contato:", scan);
+		String email = leDadosDoTeclado("Informe o email do contato:", scan);
+		
+		return new Contato(nome, email);
+	}
+	
+	private static boolean verificaSeOpcaoEValida(int opcao) {
+		return opcao > 0 && opcao < 13;
+	}
+
+}

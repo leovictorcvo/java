@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.lang.reflect.Array"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="com.leovictor.estruturadados.vetor.teste.Contato"/>
+<fullyQualifiedTypeName name="com.leovictor.estruturadados.vetor.Vetor"/>
+<fullyQualifiedTypeName name="java.lang.Character"/>
+<fullyQualifiedTypeName name="com.leovictor.estruturadados.pilha.Pilha"/>
+<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
+<fullyQualifiedTypeName name="java.util.Stack"/>
+<fullyQualifiedTypeName name="com.leovictor.estruturadados.base.EstruturaEstatica"/>
+<fullyQualifiedTypeName name="com.leovictor.estruturadados.fila.Fila"/>
+</qualifiedTypeNameHistroy>

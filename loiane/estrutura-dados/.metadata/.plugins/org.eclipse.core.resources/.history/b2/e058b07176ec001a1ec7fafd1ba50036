@@ -1,0 +1,20 @@
+package com.leovictor.estruturadados.vetor.teste;
+
+import com.leovictor.estruturadados.vetor.Vetor;
+
+public class TesteVetor {
+
+	public static void main(String[] args) {
+		Vetor vetor = new Vetor(5);
+		try {
+			vetor.adiciona("Primeiro Item");
+			vetor.adiciona("Segundo Item");
+			System.out.println(vetor.tamanho());
+			System.out.println(vetor.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

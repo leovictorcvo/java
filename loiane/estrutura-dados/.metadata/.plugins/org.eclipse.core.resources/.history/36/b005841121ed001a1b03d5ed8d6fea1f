@@ -1,0 +1,77 @@
+package com.leovictor.estruturadados.vetor;
+
+import java.lang.reflect.Array;
+
+import com.leovictor.estruturadados.base.EstruturaEstatica;
+
+public class Vetor<T> extends EstruturaEstatica<T>{
+
+	public Vetor(int capacidade) {
+		super(capacidade);
+	}
+
+	public Vetor(int capacidade, Class<T> tipoClasse) {
+		super(capacidade, tipoClasse);
+	}
+
+	public void adiciona(T item) {
+		super.adiciona(item);
+	}
+
+	protected void adiciona(T item, int posicao) throws IllegalArgumentException {
+		super.adiciona(item, posicao);
+	}
+
+	public T busca(int posicao) throws IllegalArgumentException {
+		this.verificaPosicaoValida(posicao);
+		return this.elementos[posicao];
+	}
+
+	public int buscaIndice(T item) {
+		for (int i = 0; i < this.tamanho; i++) {
+			if (this.elementos[i].equals(item)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public boolean contem(T elemento) {
+		return this.buscaIndice(elemento) > -1;
+	}
+	
+	public void remove(int posicao) {
+		this.verificaPosicaoValida(posicao);
+		for (int i = posicao; i < tamanho - 1; i++) {
+			this.elementos[i] = this.elementos[i + 1];
+		}
+		this.tamanho--;
+	}
+
+	public void remove(T elemento) {
+		int posicao = this.buscaIndice(elemento);
+		if (posicao == -1) {
+			throw new IllegalArgumentException("Elemento não encontrado no Vetor");
+		}
+		this.remove(posicao);
+	}
+
+	public void removeTudo() {
+		for(int i = 0; i < this.tamanho; i++) {
+			this.elementos[i] = null;
+		}
+		this.tamanho = 0;
+	}
+	
+
+	public int ultimoIndice(T item) {
+		for(int i = this.tamanho - 1; i >= 0; i--) {
+			if (this.elementos[i].equals(item)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+
+}

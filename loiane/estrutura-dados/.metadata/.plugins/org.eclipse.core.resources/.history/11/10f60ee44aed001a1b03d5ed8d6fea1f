@@ -1,0 +1,26 @@
+package com.leovictor.estruturadados.pilha.teste;
+
+import java.util.Stack;
+
+public class Hanoi {
+
+	public static void main(String[] args) {
+		Stack<Integer> original = new Stack<Integer>();
+		Stack<Integer> destino = new Stack<Integer>();
+		Stack<Integer> aux = new Stack<Integer>();
+		
+		original.push(3);
+		original.push(2);
+		original.push(1);
+		
+		TorreDeHanoi(3, original, destino, aux);
+	}
+
+	public static void TorreDeHanoi(
+			int qtdeDiscos, 
+			Stack<Integer> original, 
+			Stack<Integer> destino, 
+			Stack<Integer> aux) {
+				
+			}
+}

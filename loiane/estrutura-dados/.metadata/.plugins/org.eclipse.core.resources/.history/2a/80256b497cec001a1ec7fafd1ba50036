@@ -1,0 +1,68 @@
+package com.leovictor.estruturadados.vetor;
+
+public class Vetor {
+	private String[] elementos;
+	private int tamanho;
+
+	public Vetor(int capacidade) {
+		this.elementos = new String[capacidade];
+		this.tamanho = 0;
+	}
+
+	public void adiciona(String item) throws Exception {
+		if (this.tamanho < this.elementos.length) {
+			this.elementos[this.tamanho++] = item;
+		} else {
+			throw new Exception("O Vetor já está cheio e não é possível adicionar mais elementos.");
+		}
+	}
+
+	public void adiciona(String item, int posicao) throws Exception {
+		if (this.tamanho < this.elementos.length) {
+			if (posicao < this.tamanho) {
+				for(int i = this.tamanho; i > posicao; i--) {
+					this.elementos[i] = this.elementos[i - 1];
+				}
+				this.elementos[posicao] = item;
+				this.tamanho++;
+			}
+		} else {
+			throw new Exception("O Vetor já está cheio e não é possível adicionar mais elementos.");
+		}
+	}
+	
+	public String busca(int posicao) {
+		if (posicao >= 0 && posicao < this.tamanho) {
+			return this.elementos[posicao];
+		} 
+		throw new IllegalArgumentException("A posição desejada não é válida.");
+	}
+	
+	public int busca(String item) {
+		for (int i = 0; i < this.tamanho; i++) {
+			if (this.elementos[i].equals(item)) {
+				return i;
+			}
+		} 
+		return -1;
+	}
+	
+	public int tamanho() {
+		return this.tamanho;
+	}
+
+	public String toString() {
+		StringBuffer sb = new StringBuffer("[");
+
+		for (int i = 0; i < this.tamanho; i++) {
+			sb.append(this.elementos[i]);
+			if (i < this.tamanho - 1) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("]");
+
+		return sb.toString();
+	}
+}

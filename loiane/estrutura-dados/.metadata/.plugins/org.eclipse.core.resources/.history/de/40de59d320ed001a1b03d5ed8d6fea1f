@@ -1,0 +1,69 @@
+package com.leovictor.estruturadados.base;
+
+import java.lang.reflect.Array;
+
+public abstract class EstruturaEstatica<T> {
+	private T[] elementos;
+	private int tamanho;
+
+	public EstruturaEstatica(int capacidade) {
+		this.elementos = (T[]) new Object[capacidade];
+		this.tamanho = 0;
+	}
+
+	public EstruturaEstatica(int capacidade, Class<T> tipoClasse) {
+		this.elementos = (T[]) Array.newInstance(tipoClasse, capacidade);
+		this.tamanho = 0;
+	}
+
+	public void adiciona(T item) {
+		this.aumentaCapacidade();
+		this.elementos[this.tamanho++] = item;
+	}
+
+	public void adiciona(T item, int posicao) throws IllegalArgumentException {
+		this.verificaPosicaoValida(posicao);
+		this.aumentaCapacidade();
+		for (int i = this.tamanho; i > posicao; i--) {
+			this.elementos[i] = this.elementos[i - 1];
+		}
+		this.elementos[posicao] = item;
+		this.tamanho++;
+	}
+
+	private void aumentaCapacidade() {
+		if (this.tamanho == this.elementos.length) {
+			T[] elementosNovos = (T[]) new Object[this.elementos.length * 2];
+			for (int i = 0; i < this.elementos.length; i++) {
+				elementosNovos[i] = this.elementos[i];
+			}
+			this.elementos = elementosNovos;
+		}
+	}
+
+	public int tamanho() {
+		return this.tamanho;
+	}
+
+	public String toString() {
+		StringBuffer sb = new StringBuffer("[");
+
+		for (int i = 0; i < this.tamanho; i++) {
+			sb.append(this.elementos[i]);
+			if (i < this.tamanho - 1) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("]");
+
+		return sb.toString();
+	}
+
+	protected void verificaPosicaoValida(int posicao) throws IllegalArgumentException {
+		if (posicao < 0 || posicao >= this.tamanho) {
+			throw new IllegalArgumentException("A posição desejada (" + posicao + ") não é válida.");
+		}
+	}
+
+}

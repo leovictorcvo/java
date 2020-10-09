@@ -1,0 +1,22 @@
+package com.leovictor.estruturadados.pilha.teste;
+
+import com.leovictor.estruturadados.pilha.Pilha;
+
+public class DecimalBinario {
+
+	public static void main(String[] args) {
+		
+
+	}
+	
+	public static string convertParaBinario(int decimal) {
+		Pilha<Integer> pilha = new Pilha<Integer>();
+		
+		StringBuilder sb = new StringBuilder();
+		while (decimal > 0) {
+			pilha.empilha(decimal % 2);
+			decimal /= 2;
+		}
+	}
+
+}
