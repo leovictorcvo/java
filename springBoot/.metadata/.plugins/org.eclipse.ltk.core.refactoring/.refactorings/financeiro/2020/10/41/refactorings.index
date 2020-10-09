@@ -1,0 +1,12 @@
+1601814564189	Copy file
+1601814594503	Delete element
+1601988938750	Rename local variable 'usuarioPage'
+1601992796036	Copy compilation unit
+1601993036421	Delete element
+1602078145565	Delete element
+1602078428066	Rename field 'usuarioAutenticado'
+1602106541375	Rename type 'CategoriaDto'
+1602106561333	Rename type 'CriarCategoriaDTO'
+1602106580043	Rename type 'ErroValidacaoDto'
+1602107016397	Rename local variable 'criarLancamentoDTO'
+1602114190004	Rename field 'lancamentoInvalido'

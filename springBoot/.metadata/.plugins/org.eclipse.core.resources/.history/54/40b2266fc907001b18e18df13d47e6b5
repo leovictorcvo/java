@@ -1,0 +1,33 @@
+package br.com.leovictor.financeiro.repository;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import br.com.leovictor.financeiro.domain.Usuario;
+
+@DataJpaTest
+class UsuarioRepositoryTest {
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
+	private Usuario usuarioNovo = new Usuario("teste", new CPF("55761387085"), "teste@teste.com", "123456");
+
+	@BeforeEach
+	void setUp() {
+	}
+
+	@Test
+	void deveCriarUmUsuarioComSucesso() {
+		Usuario novo = usuarioRepository.save(usuarioNovo);
+
+		assertThat(novo).isNotNull();
+		assertThat(novo.getId()).isNotNull();
+		assertThat(novo.getNome()).isEqualTo(usuarioNovo.getNome());
+	}
+
+}

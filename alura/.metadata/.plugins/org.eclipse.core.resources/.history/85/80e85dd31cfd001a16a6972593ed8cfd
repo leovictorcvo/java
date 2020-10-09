@@ -1,0 +1,11 @@
+package br.com.leovictor.jpa.modelo;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+
+@Entity
+public class Movimentacao {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+}

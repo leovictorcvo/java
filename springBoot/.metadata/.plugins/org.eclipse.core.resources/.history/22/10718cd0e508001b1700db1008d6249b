@@ -1,0 +1,5 @@
+package br.com.leovictor.financeiro.dto;
+
+public class CriaLancamentoDTO {
+
+}

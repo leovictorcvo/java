@@ -1,0 +1,85 @@
+package br.com.caelum.leilao.servico;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import br.com.caelum.leilao.dominio.Lance;
+import br.com.caelum.leilao.dominio.Leilao;
+import br.com.caelum.leilao.dominio.Usuario;
+
+
+public class AvaliadorTest {
+
+	@Test
+	public void deveAvaliarCorretamenteComValoresOrdenados() {
+		Double menorValor = 250.0;
+		Double maiorValor = 400.0;
+		
+		Usuario joao = new Usuario("João");
+		Usuario maria = new Usuario("Maria");
+		Usuario jose = new Usuario("José");
+		
+		Leilao leilao = new Leilao("Notebook I7");
+		leilao.propoe(new Lance(joao, menorValor));
+		leilao.propoe(new Lance(maria, 300));
+		leilao.propoe(new Lance(jose, maiorValor));
+		
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		
+		Assert.assertEquals(menorValor, leiloeiro.getMenorLance(), 0.000001);
+		Assert.assertEquals(maiorValor, leiloeiro.getMaiorLance(), 0.000001);
+	}
+
+	@Test
+	public void deveAvaliarCorretamenteComValoresOrdenadosDecrescentes() {
+		Double menorValor = 200.0;
+		Double maiorValor = 400.0;
+		
+		Usuario joao = new Usuario("João");
+		Usuario maria = new Usuario("Maria");
+		Usuario jose = new Usuario("José");
+		
+		Leilao leilao = new Leilao("Notebook I7");
+		leilao.propoe(new Lance(jose, maiorValor));
+		leilao.propoe(new Lance(maria, 300));
+		leilao.propoe(new Lance(joao, menorValor));
+		
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		
+		Assert.assertEquals(menorValor, leiloeiro.getMenorLance(), 0.000001);
+		Assert.assertEquals(maiorValor, leiloeiro.getMaiorLance(), 0.000001);
+	}
+
+	@Test
+	public void deveCalcularAMediaDosLances() {
+		Usuario joao = new Usuario("João");
+		Usuario maria = new Usuario("Maria");
+		Usuario jose = new Usuario("José");
+		
+		Leilao leilao = new Leilao("Notebook I7");
+		leilao.propoe(new Lance(jose, 200));
+		leilao.propoe(new Lance(maria, 300));
+		leilao.propoe(new Lance(joao, 400));
+		
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		
+		Assert.assertEquals(300.0, leiloeiro.getMedia(), 0.000001);
+	}
+	
+	@Test
+    public void testaMediaDeZeroLance(){
+
+        Usuario ewertom = new Usuario("Ewertom");
+
+		Leilao leilao = new Leilao("Notebook I7");
+
+        Avaliador avaliador = new Avaliador();
+        avaliador.avalia(leilao);
+
+        Assert.assertEquals(0, avaliador.getMedia(), 0.000001);
+
+    }
+}

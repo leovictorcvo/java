@@ -1,0 +1,54 @@
+package br.com.leovictor.financeiro.repository;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import javax.validation.ConstraintViolationException;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import br.com.leovictor.financeiro.domain.CPF;
+import br.com.leovictor.financeiro.domain.Categoria;
+import br.com.leovictor.financeiro.domain.Usuario;
+
+@DataJpaTest
+class UsuarioRepositoryTest {
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
+	private Usuario usuarioNovo = new Usuario("teste", new CPF("55761387085"), "teste@teste.com", "123456");
+
+	@BeforeEach
+	void setUp() {
+	}
+
+	@Test
+	void deveCriarUmUsuarioComSucesso() {
+		Usuario novo = usuarioRepository.save(usuarioNovo);
+
+		assertThat(novo).isNotNull();
+		assertThat(novo.getId()).isNotNull();
+		assertThat(novo.getNome()).isEqualTo(usuarioNovo.getNome());
+	}
+	
+	@Test
+	void deveGerarUmExcecaoAoSalvarUmaUsuarioInvalido() {
+		Usuario usuarioInvalido = new Usuario();
+
+		assertThatThrownBy(() -> usuarioRepository.save(usuarioInvalido)).isInstanceOf(ConstraintViolationException.class);
+	}
+
+	
+	@Test
+	void deveGerarUmExcecaoAoAtualizarUmaUsuarioComDadosInvalidos() {
+		Usuario salvo = usuarioRepository.save(usuarioNovo);
+		salvo.setNome(null);
+
+		assertThat(salvo.getNome()).isNotNull();
+//		assertThatThrownBy(() -> usuarioRepository.save(salvo)).isInstanceOf(ConstraintViolationException.class);
+	}
+}

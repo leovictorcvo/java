@@ -1,0 +1,44 @@
+package br.com.leovictor.financeiro.dto;
+
+import java.math.BigDecimal;
+
+public class AtualizaLancamentoDTO {
+	private String descricao;
+	private Long categoriaId;
+	private BigDecimal valor;
+
+	public AtualizaLancamentoDTO(String descricao, Long categoriaId, BigDecimal valor) {
+		this.descricao = descricao;
+		this.categoriaId = categoriaId;
+		this.valor = valor;
+	}
+
+	public AtualizaLancamentoDTO() {
+
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Long getCategoriaId() {
+		return categoriaId;
+	}
+
+	public void setCategoriaId(Long categoriaId) {
+		this.categoriaId = categoriaId;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
+}

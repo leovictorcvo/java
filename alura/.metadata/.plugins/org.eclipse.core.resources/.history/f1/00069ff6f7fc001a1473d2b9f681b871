@@ -1,0 +1,10 @@
+package br.com.leovictor.jpa.testes;
+
+public class TesteAlteraConta {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

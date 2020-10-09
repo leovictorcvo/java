@@ -1,0 +1,15 @@
+package br.com.caelum.leilao.servico;
+
+import br.com.caelum.leilao.dominio.Leilao;
+
+public class Avaliador {
+	private Double menorLance = Double.POSITIVE_INFINITY;
+	private Double maiorLance = Double.NEGATIVE_INFINITY;
+	
+	public void avalia(Leilao leilao) {
+		for (Lance lance : leilao.getLances()) {
+			if (lance > maiorLance) maiorLance = lance;
+			if (lance < menorLance) menorLance = lance;
+		}
+	}
+}

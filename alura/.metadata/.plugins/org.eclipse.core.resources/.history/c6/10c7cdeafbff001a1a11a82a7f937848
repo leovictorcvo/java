@@ -1,0 +1,64 @@
+package br.com.caelum.leilao.dominio;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+public class LeilaoTest {
+
+	@Test
+	public void naoDeveAceitarDoisLancesEmSequenciaDoMesmoUsuario() {
+		Usuario joao = new Usuario("João");
+
+		Leilao leilao = new Leilao("Notebook I7");
+
+		leilao.propoe(new Lance(joao, 100.0));
+		leilao.propoe(new Lance(joao, 200.0));
+
+		assertEquals(1, leilao.getLances().size());
+		assertEquals(100.0, leilao.getLances().get(0).getValor(), 0.000001);
+	}
+
+	@Test
+	public void naoDeveAceitarMaisQueCincoLancesDoMesmoUsuario() {
+		Usuario joao = new Usuario("João");
+		Usuario maria = new Usuario("Maria");
+
+		Leilao leilao = new Leilao("Notebook I7");
+
+		leilao.propoe(new Lance(joao, 100.0));
+		leilao.propoe(new Lance(maria, 200.0));
+
+		leilao.propoe(new Lance(joao, 300.0));
+		leilao.propoe(new Lance(maria, 400.0));
+
+		leilao.propoe(new Lance(joao, 500.0));
+		leilao.propoe(new Lance(maria, 600.0));
+
+		leilao.propoe(new Lance(joao, 700.0));
+		leilao.propoe(new Lance(maria, 800.0));
+
+		leilao.propoe(new Lance(joao, 900.0));
+		leilao.propoe(new Lance(maria, 1000.0));
+
+		leilao.propoe(new Lance(joao, 1100.0));
+
+		assertEquals(10, leilao.getLances().size());
+		assertEquals(1000.0, leilao.getLances().get(leilao.getLances().size() - 1).getValor(), 0.000001);
+	}
+
+	@Test
+	public void podeIncluirUmLanceComValorDobradoDoUltimoLanceDoUsuario() {
+		Usuario joao = new Usuario("João");
+		Usuario maria = new Usuario("Maria");
+
+		Leilao leilao = new Leilao("Notebook I7");
+
+		leilao.propoe(new Lance(joao, 100.0));
+		leilao.propoe(new Lance(maria, 200.0));
+		leilao.dobraProposta(joao);
+
+		assertEquals(3, leilao.getLances().size());
+		assertEquals(200.0, leilao.getLances().get(leilao.getLances().size() - 1).getValor(), 0.000001);
+	}
+}

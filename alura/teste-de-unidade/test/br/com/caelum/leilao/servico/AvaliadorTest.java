@@ -1,0 +1,159 @@
+package br.com.caelum.leilao.servico;
+
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import br.com.caelum.leilao.dominio.Lance;
+import br.com.caelum.leilao.dominio.Leilao;
+import br.com.caelum.leilao.dominio.Usuario;
+import br.com.caelum.testDataBuilder.ConstrutorDeLeilao;
+
+public class AvaliadorTest {
+	
+	private Avaliador leiloeiro;
+	private Usuario joao;
+	private Usuario maria;
+	private Usuario jose;
+
+	@Before
+	public void setUp() {
+		leiloeiro = new Avaliador();
+		
+		joao = new Usuario("João");
+		maria = new Usuario("Maria");
+		jose = new Usuario("José");
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void naoDeveAvaliarLeilaoSemLances() {
+		Leilao leilao = new ConstrutorDeLeilao()
+				.para("Notebook I7")
+				.constroi();
+
+		leiloeiro.avalia(leilao);
+	
+	}
+	
+	@Test
+	public void deveAvaliarCorretamenteComValoresOrdenados() {
+		Double menorValor = 250.0;
+		Double maiorValor = 400.0;
+
+		Leilao leilao = new ConstrutorDeLeilao()
+				.para("Notebook I7")
+				.comLance(new Lance(joao, menorValor))
+				.comLance(new Lance(maria, 300))
+				.comLance(new Lance(jose, maiorValor))
+				.constroi();
+
+		leiloeiro.avalia(leilao);
+
+		Assert.assertEquals(menorValor, leiloeiro.getMenorLance(), 0.000001);
+		Assert.assertEquals(maiorValor, leiloeiro.getMaiorLance(), 0.000001);
+	}
+
+	@Test
+	public void deveAvaliarCorretamenteComValoresOrdenadosDecrescentes() {
+		Double menorValor = 200.0;
+		Double maiorValor = 400.0;
+
+		Leilao leilao = new ConstrutorDeLeilao()
+				.para("Notebook I7")
+				.comLance(new Lance(jose, maiorValor))
+				.comLance(new Lance(maria, 300))
+				.comLance(new Lance(joao, menorValor))
+				.constroi();
+
+		leiloeiro.avalia(leilao);
+
+		Assert.assertEquals(menorValor, leiloeiro.getMenorLance(), 0.000001);
+		Assert.assertEquals(maiorValor, leiloeiro.getMaiorLance(), 0.000001);
+	}
+
+	@Test
+	public void deveAvaliarCorretamenteComValoresEmOrdemAleatoria() {
+		Double menorValor = 200.0;
+		Double maiorValor = 400.0;
+
+		Leilao leilao = new ConstrutorDeLeilao()
+				.para("Notebook I7")
+				.comLance(new Lance(jose, maiorValor))
+				.comLance(new Lance(maria, 300))
+				.comLance(new Lance(jose, 310))
+				.comLance(new Lance(joao, 210))
+				.comLance(new Lance(jose, menorValor))
+				.comLance(new Lance(maria, 380))
+				.constroi();
+
+		leiloeiro.avalia(leilao);
+
+		Assert.assertEquals(menorValor, leiloeiro.getMenorLance(), 0.000001);
+		Assert.assertEquals(maiorValor, leiloeiro.getMaiorLance(), 0.000001);
+	}
+	
+	@Test
+	public void deveAvaliarComSomenteUmLance() {
+		Leilao leilao = new ConstrutorDeLeilao()
+				.para("Notebook I7")
+				.comLance(new Lance(maria, 300))
+				.constroi();
+
+		leiloeiro.avalia(leilao);
+
+		Assert.assertEquals(300.0, leiloeiro.getMenorLance(), 0.000001);
+		Assert.assertEquals(300.0, leiloeiro.getMaiorLance(), 0.000001);
+	}
+
+	@Test
+	public void deveRetornaOs3MaioresLancesQuandoTiverMaisQue3Lances() {
+		Leilao leilao = new ConstrutorDeLeilao()
+				.para("Notebook I7")
+				.comLance(new Lance(jose, 500))
+				.comLance(new Lance(maria, 300))
+				.comLance(new Lance(jose, 100))
+				.comLance(new Lance(joao, 200))
+				.comLance(new Lance(maria, 400))
+				.constroi();
+
+		leiloeiro.avalia(leilao);
+
+		List<Lance> maiores = leiloeiro.getMaiores();
+		Assert.assertEquals(3, maiores.size());
+		Assert.assertEquals(500.0, maiores.get(0).getValor(), 0.000001);
+		Assert.assertEquals(400.0, maiores.get(1).getValor(), 0.000001);
+		Assert.assertEquals(300.0, maiores.get(2).getValor(), 0.000001);
+	}
+
+	@Test
+	public void deveRetornarTodosOsLancesQuandoTiverMenosQue3Lances() {
+		Leilao leilao = new ConstrutorDeLeilao()
+				.para("Notebook I7")
+				.comLance(new Lance(maria, 300))
+				.comLance(new Lance(jose, 400))
+				.constroi();
+
+		leiloeiro.avalia(leilao);
+
+		List<Lance> maiores = leiloeiro.getMaiores();
+		Assert.assertEquals(2, maiores.size());
+		Assert.assertEquals(400.0, maiores.get(0).getValor(), 0.000001);
+		Assert.assertEquals(300.0, maiores.get(1).getValor(), 0.000001);
+	}
+
+	@Test
+	public void deveCalcularAMediaDosLances() {
+		Leilao leilao = new ConstrutorDeLeilao()
+				.para("Notebook I7")
+				.comLance(new Lance(jose, 400))
+				.comLance(new Lance(maria, 300))
+				.comLance(new Lance(jose, 500))
+				.constroi();
+
+		leiloeiro.avalia(leilao);
+
+		Assert.assertEquals(400.0, leiloeiro.getMedia(), 0.000001);
+	}
+}

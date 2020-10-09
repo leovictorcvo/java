@@ -1,0 +1,45 @@
+package br.com.leovictor.financeiro.repository;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import br.com.leovictor.financeiro.domain.Categoria;
+
+@DataJpaTest
+@DisplayName("Teste do repositório de categorias")
+class CategoriaRepositoryTest {
+
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+	
+	@Test
+	void deveCriarUmaCategoriaComSucesso() {
+		Categoria nova = new Categoria("Teste");
+		
+		Categoria salva = categoriaRepository.save(nova);
+		
+		assertThat(salva.getId()).isNotNull();
+		assertThat(salva.getNome()).isNotNull();
+		assertThat(salva.getNome()).isEqualTo(nova.getNome());
+	}
+
+	@Test
+	void deveAtualizarUmaCategoriaComSucesso() {
+		Categoria nova = new Categoria("Teste");
+		
+		Categoria salva = categoriaRepository.save(nova);
+		salva.setNome("atualizada");
+		
+		Categoria atualizada = categoriaRepository.save(salva);
+		
+		assertThat(atualizada.getId()).isNotNull();
+		assertThat(atualizada.getNome()).isNotNull();
+		assertThat(atualizada.getId()).isEqualTo(salva.getId());
+		assertThat(atualizada.getNome()).isEqualTo(salva.getNome());
+	}
+
+}

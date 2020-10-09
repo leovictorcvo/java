@@ -1,0 +1,7 @@
+1601059773891	Move compilation unit
+1601123226899	Extract method 'obtemQuantidadeLancesDoUsuario'
+1601123319844	Rename local variable 'item'
+1601126905403	Extract method 'ultimoLanceDo'
+1601155310043	Rename type 'LeilaoBuilder'
+1601155347236	Rename method 'lance'
+1601155359177	Rename method 'build'

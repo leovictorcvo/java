@@ -1,0 +1,16 @@
+package br.com.leovictor.jdbc.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class TestaConexao {
+
+	public static void main(String[] args) throws SQLException {
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/alura_loja_jdbc?use_timezone=true&serverTimezone=UTC", "root", "docker");
+		
+		connection.close();
+
+	}
+
+}

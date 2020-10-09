@@ -1,0 +1,69 @@
+package br.com.caelum.leilao.dominio;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Leilao {
+
+	private String descricao;
+	private List<Lance> lances;
+
+	public Leilao(String descricao) {
+		this.descricao = descricao;
+		this.lances = new ArrayList<Lance>();
+	}
+
+	public void propoe(Lance lance) {
+
+		if (lances.size() == 0 || podeDarLance(lance.getUsuario()))
+			lances.add(lance);
+	}
+
+	public void dobraProposta(Usuario usuario) {
+		Lance ultimoLance = ultimoLanceDo(usuario);
+		
+		if (ultimoLance == null) {
+			return;
+		}
+		
+		propoe(new Lance(usuario, ultimoLance.getValor() * 2));
+	}
+
+	private Lance ultimoLanceDo(Usuario usuario) {
+		Lance ultimoLance = null;
+		for (Lance lance : lances) {
+			if (lance.getUsuario().equals(usuario)) {
+				ultimoLance = lance;
+			}
+		}
+		return ultimoLance;
+	}
+
+	private boolean podeDarLance(Usuario usuario) {
+		int quantidadeDeLancesDoUsuario = obtemQuantidadeLancesDoUsuario(usuario);
+		Usuario quemDeuUltimoLance = lances.get(lances.size() - 1).getUsuario();
+		return !quemDeuUltimoLance.equals(usuario) && quantidadeDeLancesDoUsuario < 5;
+	}
+
+	private int obtemQuantidadeLancesDoUsuario(Usuario usuario) {
+		int quantidadeDeLancesDoUsuario = 0;
+
+		for (Lance lance : lances) {
+			if (lance.getUsuario().equals(usuario)) {
+				quantidadeDeLancesDoUsuario++;
+			}
+		}
+
+		return quantidadeDeLancesDoUsuario;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public List<Lance> getLances() {
+		return Collections.unmodifiableList(lances);
+	}
+
+}

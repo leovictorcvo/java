@@ -1,0 +1,37 @@
+package br.com.alura.forum.config.security;
+
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+public class AuthByTokenFilter extends OncePerRequestFilter {
+
+	@Autowired
+	private TokenService tokenService;
+
+
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+		String token = recuperarToken(request);
+		boolean isValid = tokenService.isValid(token);
+		filterChain.doFilter(request, response);
+	}
+
+	private String recuperarToken(HttpServletRequest request) {
+		String header = request.getHeader("Authorization");
+
+		if (header == null || header.isEmpty() || !header.startsWith("Bearer ")) {
+			return null;			
+		}
+		
+		return header.split(" ")[1];
+	}
+
+}

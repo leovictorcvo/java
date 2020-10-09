@@ -1,0 +1,44 @@
+package br.com.leovictor.jpa.modelo;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Conta {
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Long id;
+	public String titular;
+	public Integer agencia;
+	public Integer numero;
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getTitular() {
+		return titular;
+	}
+	public void setTitular(String titular) {
+		this.titular = titular;
+	}
+	public Integer getAgencia() {
+		return agencia;
+	}
+	public void setAgencia(Integer agencia) {
+		this.agencia = agencia;
+	}
+	public Integer getNumero() {
+		return numero;
+	}
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+	
+	
+}
